@@ -1,0 +1,156 @@
+@charset "utf-8";
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" 
+
+rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset","compass/css3","compass/layout","compass/utilities","../images/*.png";
+$images-layout:vertical;
+@include all-images-sprites;
+//.img-sprites {
+//  .icon1 { @include images-sprite(icon1);}
+//  .icon2 { @include images-sprite(icon2);}
+//  .icon3 { @include images-sprite(icon3);}
+//  .icon4 { @include images-sprite(icon4); }
+//}
+$c-red:red;
+$c-blue:blue;
+$c-white:white;
+$c-green:green;
+$num: 20px;
+$f-size:1em;
+
+$link-c:yellow , gray , blue;
+
+.icon1-w-h-base64{
+	width:image-width('../images/icon1.png');
+	height:image-height('../images/icon1.png');
+	background:inline-image('../images/icon1.png');
+}
+
+.link-c-nth{
+	@extend %baseStyle;
+	padding:$num * 2;
+	background:nth($link-c,1);
+}
+
+%baseStyle{
+	font-size:1.4em;
+	color:darken($c-blue,60%);
+}
+
+
+article{
+	@extend %baseStyle;
+	h1{
+		color:$c-red;
+	}
+}
+
+.mod{
+	background:darken($c-green,10%);
+	padding:$num / 2;
+	@extend %baseStyle;
+	.hd & {
+		h2 {
+			font-size:$f-size * 5;
+		}
+	}
+	.bd{
+		text-shadow:1px 2px 5px rgba(0,0,0,1);
+		color:$c-white;
+	}
+}
+
+/* @mixin */
+@mixin hover-link{
+	text-decoration:none;
+	&:hover{
+		text-decoration:underline;
+		color:$c-green * 333444;
+	}
+}
+
+nav a{
+	@include hover-link;
+}
+
+@mixin border-radius($value-br) {
+   -webkit-border-radius:$value-br;
+   -moz-border-radius:$value-br;
+   border-radius:$value-br;
+}
+menu {
+   @include border-radius(5px);
+   background:$c-green * 333444;
+}
+
+@mixin link-h($link-a:blue,$link-b:red){
+	background:$link-a;
+	color:$c-white;
+	&:hover{background:$link-b;}
+}
+.msg a{
+	@include link-h($link-a:blue);
+}
+
+/* @for */
+@for $level from 0 to 5 {
+	.tag-#{$level + 1} {
+		font-size:.7em + ($level * .5em);
+	}
+}
+
+/* @while */
+$w-level: 0;
+@while $w-level < 10 {
+	.tags-#{$w-level + 1} {
+		font-size:.7em + ($w-level * .5em);
+	}
+	$w-level:$w-level + 1
+}
+
+/* @each 测试*/
+$each-ins:text,button,file,radiu;
+@each $className in $each-ins {
+	.#{$className}-icons {
+		background:url(/images/#{$className}.png);
+	}
+}
+
+.color-rgba{
+	color:invert(#333876);
+}
+
+/* px转换em */
+@function pxem($px,$px-to-em:16px) {
+	@return ($px / $px-to-em) * 1em;
+}
+
+.px-em-test h2{
+	font-size:pxem(25px);
+}
+
+.px-em-test h2{
+	font-size:pxem(55px);
+}
+
+@media screen and (min-width:320px) and (max-width:500px) {
+	body{
+		background:$c-red;
+	}
+}	
+
+.hds{
+	font-size:pxem(33px);
+	background:darken($c-red,60%);
+	@include opacity(0.5);
+	@include border-corner-radius(top, left, 6px);
+	@include inline-block;
+}
+.clearfix{
+	@include clearfix;
+}
+
